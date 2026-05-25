@@ -35,23 +35,17 @@ def generate_launch_description():
         launch_arguments={'gz_args': '-r -v 4 empty.sdf'}.items()
     )
 
-    spawn_robot = TimerAction(
-        period=3.0,
-        actions=[Node(
-            package='ros_gz_sim',
-            executable='create',
-            arguments=[
-                '-topic', '/robot_description',
-                '-name', 'cooka',
-                '-allow_renaming', 'false',
-                '-x', '0.0',
-                '-y', '0.0',
-                '-z', '0.0',
-                '-Y', '0.0'
-            ],
-            output='screen',
-            additional_env={'RMW_IMPLEMENTATION': 'rmw_cyclonedds_cpp'},
-        )]
+    spawn_robot = Node(
+        package='ros_gz_sim',
+        executable='create',
+        arguments=[
+            '-topic', '/robot_description',
+            '-name', 'cooka',
+            '-allow_renaming', 'false',
+            '-x', '0.0', '-y', '0.0', '-z', '0.0', '-Y', '0.0'
+        ],
+        output='screen',
+        additional_env={'RMW_IMPLEMENTATION': 'rmw_cyclonedds_cpp'},
     )
 
     ros_gz_bridge = Node(
@@ -62,8 +56,11 @@ def generate_launch_description():
         additional_env={'RMW_IMPLEMENTATION': 'rmw_cyclonedds_cpp'},
     )
 
+    # gz_ros2_control initialises the hardware plugin but does NOT activate controllers.
+    # Spawners must explicitly load + activate each controller after the hardware is ready.
+    # Hardware activation completes ~2 s after the robot model is spawned, so t=4 s is safe.
     joint_state_broadcaster_spawner = TimerAction(
-        period=6.0,
+        period=4.0,
         actions=[Node(
             package='controller_manager',
             executable='spawner',
@@ -74,7 +71,7 @@ def generate_launch_description():
     )
 
     arm_controller_spawner = TimerAction(
-        period=8.0,
+        period=5.0,
         actions=[Node(
             package='controller_manager',
             executable='spawner',
@@ -85,7 +82,7 @@ def generate_launch_description():
     )
 
     gripper_controller_spawner = TimerAction(
-        period=9.0,
+        period=6.0,
         actions=[Node(
             package='controller_manager',
             executable='spawner',

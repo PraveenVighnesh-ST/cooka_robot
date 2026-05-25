@@ -9,6 +9,15 @@
   <xacro:include filename="$(find cooka_description)/urdf/cooka.gazebo" />
 </xacro:if>
 
+<!-- Fixes base_link to the Gazebo world frame so joint reaction forces
+     do not move the whole robot body. -->
+<link name="world"/>
+<joint name="world_joint" type="fixed">
+  <parent link="world"/>
+  <child link="base_link"/>
+  <origin xyz="0 0 0" rpy="0 0 0"/>
+</joint>
+
 <link name="base_link">
   <inertial>
     <origin xyz="0.9975436681222708 0.5721661208151383 0.9542849344978166" rpy="0 0 0"/>

@@ -15,6 +15,7 @@ _SDF_TEMPLATE = """\
   <model name="{name}">
     <static>false</static>
     <link name="link">
+      <gravity>false</gravity>
       <inertial>
         <mass>0.5</mass>
         <inertia>

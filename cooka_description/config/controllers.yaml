@@ -20,13 +20,50 @@ arm_controller:
       - scara_j2
       - wrist_z
       - wrist_y
+    # Velocity command interface: JTC converts position trajectories to velocity
+    # commands using the per-joint PID below.  gz_ros2_control passes the velocity
+    # straight to the physics engine — no global position_proportional_gain involved.
     command_interfaces:
-      - position
+      - velocity
     state_interfaces:
       - position
       - velocity
     allow_partial_joints_goal: false
     open_loop_control: false
+    # Per-joint PID  (units: (m/s)/m = 1/s for prismatic, (rad/s)/rad = 1/s for revolute)
+    # P=50 → 1 cm error produces 0.5 m/s correction (safe for max Y_SPEED=0.2 m/s).
+    # D=0.5 damps transient overshoot. I=0 (no steady-state gravity error since gravity=false).
+    gains:
+      h_slider:
+        p: 50.0
+        i: 0.0
+        d: 0.5
+        i_clamp: 5.0
+      v_slider:
+        p: 50.0
+        i: 0.0
+        d: 0.5
+        i_clamp: 5.0
+      scara_j1:
+        p: 50.0
+        i: 0.0
+        d: 0.5
+        i_clamp: 5.0
+      scara_j2:
+        p: 50.0
+        i: 0.0
+        d: 0.5
+        i_clamp: 5.0
+      wrist_z:
+        p: 50.0
+        i: 0.0
+        d: 0.5
+        i_clamp: 5.0
+      wrist_y:
+        p: 50.0
+        i: 0.0
+        d: 0.5
+        i_clamp: 5.0
 
 gripper_controller:
   ros__parameters:

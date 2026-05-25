@@ -1,6 +1,8 @@
 <?xml version="1.0" ?>
 <robot name="cooka" xmlns:xacro="http://www.ros.org/wiki/xacro">
 
+<!-- base_link is pinned to world by the world_joint fixed joint.
+     Gravity setting here is irrelevant for a fixed link, but left true for clarity. -->
 <gazebo reference="base_link">
   <mu1>0.2</mu1>
   <mu2>0.2</mu2>
@@ -8,59 +10,71 @@
   <gravity>true</gravity>
 </gazebo>
 
-<gazebo reference="v_slider_1">
-  <mu1>0.2</mu1>
-  <mu2>0.2</mu2>
-  <self_collide>false</self_collide>
-</gazebo>
-
 <gazebo reference="h_slider_1">
   <mu1>0.2</mu1>
   <mu2>0.2</mu2>
   <self_collide>false</self_collide>
+  <gravity>false</gravity>
+</gazebo>
+
+<gazebo reference="v_slider_1">
+  <mu1>0.2</mu1>
+  <mu2>0.2</mu2>
+  <self_collide>false</self_collide>
+  <gravity>false</gravity>
 </gazebo>
 
 <gazebo reference="scara_link1_1">
   <mu1>0.2</mu1>
   <mu2>0.2</mu2>
   <self_collide>true</self_collide>
+  <gravity>false</gravity>
 </gazebo>
 
 <gazebo reference="scara_link2_1">
   <mu1>0.2</mu1>
   <mu2>0.2</mu2>
   <self_collide>true</self_collide>
+  <gravity>false</gravity>
 </gazebo>
 
 <gazebo reference="z_rotation_1">
   <mu1>0.2</mu1>
   <mu2>0.2</mu2>
   <self_collide>true</self_collide>
+  <gravity>false</gravity>
 </gazebo>
 
 <gazebo reference="y_rotation_1">
   <mu1>0.2</mu1>
   <mu2>0.2</mu2>
   <self_collide>true</self_collide>
+  <gravity>false</gravity>
 </gazebo>
 
 <gazebo reference="gripper_bottom_1">
   <mu1>0.8</mu1>
   <mu2>0.8</mu2>
   <self_collide>true</self_collide>
+  <gravity>false</gravity>
 </gazebo>
 
 <gazebo reference="gripper_top_1">
   <mu1>0.8</mu1>
   <mu2>0.8</mu2>
   <self_collide>true</self_collide>
+  <gravity>false</gravity>
 </gazebo>
 
 <gazebo>
   <plugin filename="libgz_ros2_control-system.so"
           name="gz_ros2_control::GazeboSimROS2ControlPlugin">
     <parameters>$(find cooka_description)/config/controllers.yaml</parameters>
-    <position_proportional_gain>2.0</position_proportional_gain>
+    <!-- Arm joints now use velocity command interface — gz_ros2_control passes
+         velocity directly to physics, so position_proportional_gain does NOT
+         apply to them.  This value only affects finger_bottom (position interface).
+         Keep ≤ 1.0; above 1.0 causes oscillation on position-interface joints. -->
+    <position_proportional_gain>1.0</position_proportional_gain>
   </plugin>
 </gazebo>
 

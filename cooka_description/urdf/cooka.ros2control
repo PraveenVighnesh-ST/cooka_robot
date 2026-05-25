@@ -6,48 +6,53 @@
       <plugin>gz_ros2_control/GazeboSimSystem</plugin>
     </hardware>
 
+    <!-- Arm joints use VELOCITY command interface.
+         gz_ros2_control passes velocity commands directly to the Gazebo physics
+         engine without applying position_proportional_gain, so the JointTrajectory
+         Controller's per-joint PID gains are the sole tuning knob — no oscillation. -->
     <joint name="h_slider">
-      <command_interface name="position"/>
+      <command_interface name="velocity"/>
       <state_interface name="position"><param name="initial_value">0.0</param></state_interface>
       <state_interface name="velocity"/>
       <state_interface name="effort"/>
     </joint>
 
     <joint name="v_slider">
-      <command_interface name="position"/>
+      <command_interface name="velocity"/>
       <state_interface name="position"><param name="initial_value">0.0</param></state_interface>
       <state_interface name="velocity"/>
       <state_interface name="effort"/>
     </joint>
 
     <joint name="scara_j1">
-      <command_interface name="position"/>
+      <command_interface name="velocity"/>
       <state_interface name="position"><param name="initial_value">0.0</param></state_interface>
       <state_interface name="velocity"/>
       <state_interface name="effort"/>
     </joint>
 
     <joint name="scara_j2">
-      <command_interface name="position"/>
+      <command_interface name="velocity"/>
       <state_interface name="position"><param name="initial_value">0.0</param></state_interface>
       <state_interface name="velocity"/>
       <state_interface name="effort"/>
     </joint>
 
     <joint name="wrist_z">
-      <command_interface name="position"/>
+      <command_interface name="velocity"/>
       <state_interface name="position"><param name="initial_value">0.0</param></state_interface>
       <state_interface name="velocity"/>
       <state_interface name="effort"/>
     </joint>
 
     <joint name="wrist_y">
-      <command_interface name="position"/>
+      <command_interface name="velocity"/>
       <state_interface name="position"><param name="initial_value">0.0</param></state_interface>
       <state_interface name="velocity"/>
       <state_interface name="effort"/>
     </joint>
 
+    <!-- Gripper keeps POSITION command interface (ForwardCommandController). -->
     <joint name="finger_bottom">
       <command_interface name="position"/>
       <state_interface name="position"><param name="initial_value">0.0</param></state_interface>
@@ -55,9 +60,7 @@
       <state_interface name="effort"/>
     </joint>
 
-    <!-- finger_top: mimic of finger_bottom (URDF <mimic> tag).
-         gz_ros2_control reads the URDF mimic and handles coupling programmatically.
-         IMPORTANT: must be state-only — activated mimic joints cannot have command interfaces. -->
+    <!-- finger_top: mimic only — state interfaces, no command interface. -->
     <joint name="finger_top">
       <state_interface name="position"><param name="initial_value">0.0</param></state_interface>
       <state_interface name="velocity"/>
