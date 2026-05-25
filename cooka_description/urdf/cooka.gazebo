@@ -1,0 +1,83 @@
+<?xml version="1.0" ?>
+<robot name="cooka" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+<gazebo reference="base_link">
+  <mu1>0.2</mu1>
+  <mu2>0.2</mu2>
+  <self_collide>true</self_collide>
+  <gravity>true</gravity>
+</gazebo>
+
+<gazebo reference="v_slider_1">
+  <mu1>0.2</mu1>
+  <mu2>0.2</mu2>
+  <self_collide>false</self_collide>
+</gazebo>
+
+<gazebo reference="h_slider_1">
+  <mu1>0.2</mu1>
+  <mu2>0.2</mu2>
+  <self_collide>false</self_collide>
+</gazebo>
+
+<gazebo reference="scara_link1_1">
+  <mu1>0.2</mu1>
+  <mu2>0.2</mu2>
+  <self_collide>true</self_collide>
+</gazebo>
+
+<gazebo reference="scara_link2_1">
+  <mu1>0.2</mu1>
+  <mu2>0.2</mu2>
+  <self_collide>true</self_collide>
+</gazebo>
+
+<gazebo reference="z_rotation_1">
+  <mu1>0.2</mu1>
+  <mu2>0.2</mu2>
+  <self_collide>true</self_collide>
+</gazebo>
+
+<gazebo reference="y_rotation_1">
+  <mu1>0.2</mu1>
+  <mu2>0.2</mu2>
+  <self_collide>true</self_collide>
+</gazebo>
+
+<gazebo reference="gripper_bottom_1">
+  <mu1>0.8</mu1>
+  <mu2>0.8</mu2>
+  <self_collide>true</self_collide>
+</gazebo>
+
+<gazebo reference="gripper_top_1">
+  <mu1>0.8</mu1>
+  <mu2>0.8</mu2>
+  <self_collide>true</self_collide>
+</gazebo>
+
+<gazebo>
+  <plugin filename="libgz_ros2_control-system.so"
+          name="gz_ros2_control::GazeboSimROS2ControlPlugin">
+    <parameters>$(find cooka_description)/config/controllers.yaml</parameters>
+    <position_proportional_gain>2.0</position_proportional_gain>
+  </plugin>
+</gazebo>
+
+<!-- DetachableJoint: creates a rigid fixed joint between y_rotation_1
+     and the active_payload model on /cooka/detachable_joint/attach,
+     removes it on /detach.  suppress_child_warning lets the plugin
+     silently wait if active_payload has not been spawned yet. -->
+<gazebo>
+  <plugin filename="gz-sim-detachable-joint-system"
+          name="gz::sim::systems::DetachableJoint">
+    <parent_link>y_rotation_1</parent_link>
+    <child_model>active_payload</child_model>
+    <child_link>link</child_link>
+    <attach_topic>/cooka/detachable_joint/attach</attach_topic>
+    <detach_topic>/cooka/detachable_joint/detach</detach_topic>
+    <suppress_child_warning>true</suppress_child_warning>
+  </plugin>
+</gazebo>
+
+</robot>

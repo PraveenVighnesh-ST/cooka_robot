@@ -1,0 +1,276 @@
+<?xml version="1.0" ?>
+<robot name="cooka" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+<xacro:arg name="use_gazebo" default="true"/>
+
+<xacro:include filename="$(find cooka_description)/urdf/materials.xacro" />
+<xacro:if value="$(arg use_gazebo)">
+  <xacro:include filename="$(find cooka_description)/urdf/cooka.ros2control" />
+  <xacro:include filename="$(find cooka_description)/urdf/cooka.gazebo" />
+</xacro:if>
+
+<link name="base_link">
+  <inertial>
+    <origin xyz="0.9975436681222708 0.5721661208151383 0.9542849344978166" rpy="0 0 0"/>
+    <mass value="500"/>
+    <inertia ixx="193.79" iyy="334.28" izz="200.26" ixy="-1.256" iyz="-1.434" ixz="23.096"/>
+  </inertial>
+  <visual>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find cooka_description)/meshes/base_link.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="dark_grey"/>
+  </visual>
+  <collision>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find cooka_description)/meshes/base_link.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<!-- horizontal carriage — child of h_slider joint (moves along X) -->
+<link name="h_slider_1">
+  <inertial>
+    <origin xyz="0.29999999999999993 0.07499999999999998 0.8749999999999999" rpy="0 0 0"/>
+    <mass value="30"/>
+    <inertia ixx="17.163" iyy="18.304" izz="1.249" ixy="0.0" iyz="0.0" ixz="0.0"/>
+  </inertial>
+  <visual>
+    <origin xyz="-0.025 -0.0 -0.025" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find cooka_description)/meshes/h_slider_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="steel_blue"/>
+  </visual>
+  <collision>
+    <origin xyz="-0.025 -0.0 -0.025" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find cooka_description)/meshes/h_slider_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<!-- vertical carriage — child of v_slider joint (moves along -Z) -->
+<link name="v_slider_1">
+  <inertial>
+    <origin xyz="0.2504465277158375 0.0372767361420814 0.12578799485755865" rpy="0 0 0"/>
+    <mass value="10"/>
+    <inertia ixx="0.040647" iyy="0.452614" izz="0.439699" ixy="-0.0001125" iyz="0.0000888" ixz="-0.0001780"/>
+  </inertial>
+  <visual>
+    <origin xyz="-0.075 -0.0375 -0.075" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find cooka_description)/meshes/v_slider_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="cyan"/>
+  </visual>
+  <collision>
+    <origin xyz="-0.075 -0.0375 -0.075" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find cooka_description)/meshes/v_slider_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="scara_link1_1">
+  <inertial>
+    <origin xyz="-3.175237850427948e-14 0.09106635955881581 -0.04888329494484578" rpy="0 0 0"/>
+    <mass value="1"/>
+    <inertia ixx="0.005561" iyy="0.000649" izz="0.005698" ixy="0.0" iyz="0.000159" ixz="0.0"/>
+  </inertial>
+  <visual>
+    <origin xyz="-0.275 -0.1 -0.25" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find cooka_description)/meshes/scara_link1_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="green"/>
+  </visual>
+  <collision>
+    <origin xyz="-0.275 -0.1 -0.25" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find cooka_description)/meshes/scara_link1_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="scara_link2_1">
+  <inertial>
+    <origin xyz="5.390132784555135e-14 0.0708029802767362 -0.09729101268320181" rpy="0 0 0"/>
+    <mass value="2"/>
+    <inertia ixx="0.010083" iyy="0.002973" izz="0.008609" ixy="0.0" iyz="0.000384" ixz="0.0"/>
+  </inertial>
+  <visual>
+    <origin xyz="-0.275 -0.3 -0.225" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find cooka_description)/meshes/scara_link2_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="yellow"/>
+  </visual>
+  <collision>
+    <origin xyz="-0.275 -0.3 -0.225" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find cooka_description)/meshes/scara_link2_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="z_rotation_1">
+  <inertial>
+    <origin xyz="-1.1102230246251565e-16 0.005859005502201642 0.04000000000000002" rpy="0 0 0"/>
+    <mass value="0.5"/>
+    <inertia ixx="0.000422" iyy="0.000312" izz="0.000269" ixy="0.0" iyz="0.0" ixz="0.0"/>
+  </inertial>
+  <visual>
+    <origin xyz="-0.275 -0.5 -0.085" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find cooka_description)/meshes/z_rotation_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="orange"/>
+  </visual>
+  <collision>
+    <origin xyz="-0.275 -0.5 -0.085" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find cooka_description)/meshes/z_rotation_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="y_rotation_1">
+  <inertial>
+    <origin xyz="-2.964295475749168e-14 0.005713885070151137 -4.163336342344337e-17" rpy="0 0 0"/>
+    <mass value="0.5"/>
+    <inertia ixx="0.000610" iyy="0.000686" izz="0.000142" ixy="0.0" iyz="0.0" ixz="0.0"/>
+  </inertial>
+  <visual>
+    <origin xyz="-0.275 -0.56 -0.125" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find cooka_description)/meshes/y_rotation_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="red"/>
+  </visual>
+  <collision>
+    <origin xyz="-0.275 -0.56 -0.125" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find cooka_description)/meshes/y_rotation_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="gripper_bottom_1">
+  <inertial>
+    <origin xyz="-0.01500000000002949 0.0081609355582134 0.01013162799287437" rpy="0 0 0"/>
+    <mass value="0.1"/>
+    <inertia ixx="1.878e-05" iyy="1.967e-05" izz="3.041e-05" ixy="0.0" iyz="-8.94e-07" ixz="0.0"/>
+  </inertial>
+  <visual>
+    <origin xyz="-0.29 -0.575 -0.085" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find cooka_description)/meshes/gripper_bottom_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="dark_red"/>
+  </visual>
+  <collision>
+    <origin xyz="-0.29 -0.575 -0.085" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find cooka_description)/meshes/gripper_bottom_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="gripper_top_1">
+  <inertial>
+    <origin xyz="-0.01500000000002949 0.0081609355582134 -0.010131627992874398" rpy="0 0 0"/>
+    <mass value="0.1"/>
+    <inertia ixx="1.878e-05" iyy="1.967e-05" izz="3.041e-05" ixy="0.0" iyz="8.94e-07" ixz="0.0"/>
+  </inertial>
+  <visual>
+    <origin xyz="-0.29 -0.575 -0.165" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find cooka_description)/meshes/gripper_top_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="dark_red"/>
+  </visual>
+  <collision>
+    <origin xyz="-0.29 -0.575 -0.165" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find cooka_description)/meshes/gripper_top_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<joint name="h_slider" type="prismatic">
+  <origin xyz="0.025 0.0 0.025" rpy="0 0 0"/>
+  <parent link="base_link"/>
+  <child link="h_slider_1"/>
+  <axis xyz="1.0 0.0 0.0"/>
+  <limit upper="1.25" lower="0.0" effort="100" velocity="100"/>
+  <dynamics damping="50.0" friction="0.0"/>
+</joint>
+
+<joint name="v_slider" type="prismatic">
+  <origin xyz="0.05 0.0375 0.05" rpy="0 0 0"/>
+  <parent link="h_slider_1"/>
+  <child link="v_slider_1"/>
+  <axis xyz="0.0 0.0 -1.0"/>
+  <limit upper="0.000" lower="-1.475" effort="1000" velocity="100"/>
+  <dynamics damping="100.0" friction="0.0"/>
+</joint>
+
+<joint name="scara_j1" type="revolute">
+  <origin xyz="0.2 0.0625 0.175" rpy="0 0 0"/>
+  <parent link="v_slider_1"/>
+  <child link="scara_link1_1"/>
+  <axis xyz="0.0 0.0 -1.0"/>
+  <limit upper="4.014257" lower="-1.047198" effort="100" velocity="100"/>
+  <dynamics damping="10.0" friction="0.0"/>
+</joint>
+
+<joint name="scara_j2" type="revolute">
+  <origin xyz="0.0 0.2 -0.025" rpy="0 0 0"/>
+  <parent link="scara_link1_1"/>
+  <child link="scara_link2_1"/>
+  <axis xyz="0.0 0.0 -1.0"/>
+  <limit upper="1.570796" lower="-4.712389" effort="100" velocity="100"/>
+  <dynamics damping="10.0" friction="0.0"/>
+</joint>
+
+<joint name="wrist_z" type="revolute">
+  <origin xyz="0.0 0.2 -0.14" rpy="0 0 0"/>
+  <parent link="scara_link2_1"/>
+  <child link="z_rotation_1"/>
+  <axis xyz="0.0 0.0 1.0"/>
+  <limit upper="2.094395" lower="-2.094395" effort="100" velocity="100"/>
+  <dynamics damping="5.0" friction="0.0"/>
+</joint>
+
+<joint name="wrist_y" type="revolute">
+  <origin xyz="0.0 0.06 0.04" rpy="0 0 0"/>
+  <parent link="z_rotation_1"/>
+  <child link="y_rotation_1"/>
+  <axis xyz="0.0 1.0 0.0"/>
+  <limit upper="3.141593" lower="-3.141593" effort="100" velocity="100"/>
+  <dynamics damping="5.0" friction="0.0"/>
+</joint>
+
+<joint name="finger_bottom" type="prismatic">
+  <origin xyz="0.015 0.015 -0.04" rpy="0 0 0"/>
+  <parent link="y_rotation_1"/>
+  <child link="gripper_bottom_1"/>
+  <axis xyz="0.0 0.0 -1.0"/>
+  <limit upper="0.0" lower="-0.015" effort="100" velocity="100"/>
+  <dynamics damping="1.0" friction="0.0"/>
+</joint>
+
+<joint name="finger_top" type="prismatic">
+  <origin xyz="0.015 0.015 0.04" rpy="0 0 0"/>
+  <parent link="y_rotation_1"/>
+  <child link="gripper_top_1"/>
+  <axis xyz="0.0 0.0 1.0"/>
+  <limit upper="0.0" lower="-0.015" effort="100" velocity="100"/>
+  <dynamics damping="1.0" friction="0.0"/>
+  <mimic joint="finger_bottom" multiplier="1.0" offset="0.0"/>
+</joint>
+
+</robot>

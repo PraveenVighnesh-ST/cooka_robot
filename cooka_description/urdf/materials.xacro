@@ -1,0 +1,40 @@
+<?xml version="1.0" ?>
+<robot name="cooka" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <material name="dark_grey">
+    <color rgba="0.25 0.25 0.25 1.0"/>
+  </material>
+
+  <material name="steel_blue">
+    <color rgba="0.27 0.51 0.71 1.0"/>
+  </material>
+
+  <material name="cyan">
+    <color rgba="0.0 0.75 0.85 1.0"/>
+  </material>
+
+  <material name="green">
+    <color rgba="0.18 0.65 0.22 1.0"/>
+  </material>
+
+  <material name="yellow">
+    <color rgba="0.90 0.78 0.10 1.0"/>
+  </material>
+
+  <material name="orange">
+    <color rgba="0.95 0.52 0.10 1.0"/>
+  </material>
+
+  <material name="red">
+    <color rgba="0.80 0.15 0.15 1.0"/>
+  </material>
+
+  <material name="dark_red">
+    <color rgba="0.55 0.05 0.05 1.0"/>
+  </material>
+
+  <material name="silver">
+    <color rgba="0.70 0.70 0.70 1.0"/>
+  </material>
+
+</robot>
