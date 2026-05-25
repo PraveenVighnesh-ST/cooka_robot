@@ -3,6 +3,9 @@ Launch RViz2 with the MoveIt2 MotionPlanning panel.
 
 Connects automatically to a running move_group (started via moveit_gazebo.launch.py).
 The MotionPlanning panel shows "waiting for move_group" until it is available.
+
+Only robot_description and robot_description_semantic are passed to RViz.
+Everything else (IK, planning groups, scene) comes from move_group via ROS services.
 """
 
 import os
@@ -27,7 +30,6 @@ def generate_launch_description():
     pkg_moveit = get_package_share_directory('cooka_moveit_config')
     pkg_cooka = get_package_share_directory('cooka_description')
 
-    # use_gazebo=false: exclude Gazebo plugin elements from the RViz description
     robot_description_config = xacro.process_file(
         os.path.join(pkg_cooka, 'urdf', 'cooka.xacro'),
         mappings={'use_gazebo': 'false'},
@@ -41,13 +43,6 @@ def generate_launch_description():
         'robot_description_kinematics': _load_yaml('cooka_moveit_config', 'config/kinematics.yaml')
     }
 
-    ompl_yaml = _load_yaml('cooka_moveit_config', 'config/ompl_planning.yaml')
-    planning_pipelines = {
-        'planning_pipelines': ['ompl'],
-        'default_planning_pipeline': 'ompl',
-        'ompl': ompl_yaml,
-    }
-
     rviz = Node(
         package='rviz2',
         executable='rviz2',
@@ -58,7 +53,6 @@ def generate_launch_description():
             robot_description,
             robot_description_semantic,
             robot_description_kinematics,
-            planning_pipelines,
             {'use_sim_time': True},
         ],
         additional_env={'RMW_IMPLEMENTATION': 'rmw_cyclonedds_cpp'},

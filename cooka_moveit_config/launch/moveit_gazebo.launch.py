@@ -1,8 +1,13 @@
 """
-Launch Gazebo simulation + move_group for the cooka robot.
+Launch Gazebo simulation, move_group, and RViz for the cooka robot.
 
-Run alongside demo.launch.py (RViz) in a separate terminal.
-move_group starts at t=12 s, after all ros2_control controllers are active.
+Timeline:
+  t= 3 s  robot spawned in Gazebo
+  t= 6 s  joint_state_broadcaster active
+  t= 8 s  arm_controller active
+  t= 9 s  gripper_controller active
+  t=12 s  move_group starts
+  t=15 s  RViz starts (after move_group is ready)
 """
 
 import os
@@ -90,4 +95,23 @@ def generate_launch_description():
         )]
     )
 
-    return LaunchDescription([gazebo, move_group])
+    # --- RViz: start after move_group is ready ---
+    rviz = TimerAction(
+        period=15.0,
+        actions=[Node(
+            package='rviz2',
+            executable='rviz2',
+            name='rviz2',
+            arguments=['-d', os.path.join(pkg_moveit, 'config', 'moveit.rviz')],
+            output='screen',
+            parameters=[
+                robot_description,
+                robot_description_semantic,
+                robot_description_kinematics,
+                {'use_sim_time': True},
+            ],
+            additional_env={'RMW_IMPLEMENTATION': 'rmw_cyclonedds_cpp'},
+        )]
+    )
+
+    return LaunchDescription([gazebo, move_group, rviz])
