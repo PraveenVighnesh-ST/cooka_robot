@@ -24,6 +24,7 @@ setup(
     entry_points={
         'console_scripts': [
             'pnp_node = pnp_operation.pnp_node:main',
+            'spawn_payload = pnp_operation.spawn_payload:main',
         ],
     },
 )
