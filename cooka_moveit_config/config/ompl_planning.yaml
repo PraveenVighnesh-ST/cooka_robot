@@ -1,0 +1,19 @@
+# IMPORTANT: Jazzy requires "planning_plugins:" (plural, list) not "planning_plugin:"
+planning_plugins:
+  - ompl_interface/OMPLPlanner
+request_adapters:
+  - default_planning_request_adapters/ResolveConstraintFrames
+  - default_planning_request_adapters/ValidateWorkspaceBounds
+  - default_planning_request_adapters/CheckStartStateBounds
+  - default_planning_request_adapters/CheckStartStateCollision
+response_adapters:
+  - default_planning_response_adapters/AddTimeOptimalParameterization
+  - default_planning_response_adapters/ValidateSolution
+  - default_planning_response_adapters/DisplayMotionPath
+# Dense segment fraction prevents paths slipping through thin module-wall geometry
+longest_valid_segment_fraction: 0.001
+
+arm:
+  type: geometric::RRTConnect
+  range: 0.0
+  longest_valid_segment_fraction: 0.001

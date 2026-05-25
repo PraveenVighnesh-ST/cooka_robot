@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>cooka_moveit_config</name>
+  <version>0.0.0</version>
+  <description>MoveIt2 configuration for the cooka robot</description>
+  <maintainer email="milooandmike@gmail.com">Praveen</maintainer>
+  <license>TODO: License declaration</license>
+
+  <depend>cooka_description</depend>
+  <depend>moveit_ros_move_group</depend>
+  <depend>moveit_planners_ompl</depend>
+  <depend>moveit_ros_visualization</depend>
+  <depend>trac_ik_kinematics_plugin</depend>
+  <exec_depend>rviz2</exec_depend>
+  <exec_depend>xacro</exec_depend>
+
+  <test_depend>ament_lint_auto</test_depend>
+  <test_depend>ament_lint_common</test_depend>
+  <test_depend>python3-pytest</test_depend>
+
+  <export>
+    <build_type>ament_python</build_type>
+  </export>
+</package>

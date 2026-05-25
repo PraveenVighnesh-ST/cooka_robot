@@ -1,0 +1,97 @@
+Panels:
+  - Class: rviz_common/Displays
+    Name: Displays
+  - Class: rviz_common/Selection
+    Name: Selection
+  - Class: rviz_common/Tool Properties
+    Name: Tool Properties
+  - Class: rviz_common/Views
+    Name: Views
+  - Class: moveit_ros_visualization/MotionPlanningPanel
+    Name: MotionPlanning
+
+Visualization Manager:
+  Class: ""
+  Displays:
+    - Alpha: 0.5
+      Cell Size: 1
+      Class: rviz_default_plugins/Grid
+      Color: 160; 160; 164
+      Enabled: true
+      Name: Grid
+      Plane: XY
+      Plane Cell Count: 10
+      Reference Frame: <Fixed Frame>
+      Value: true
+
+    - Class: rviz_default_plugins/TF
+      Enabled: true
+      Name: TF
+      Show Arrows: false
+      Show Axes: true
+      Show Names: false
+      Value: true
+
+    - Alpha: 1
+      Class: rviz_default_plugins/RobotModel
+      Description Source: Topic
+      Description Topic: /robot_description
+      Enabled: true
+      Name: RobotModel
+      Value: true
+      Visual Enabled: true
+      Collision Enabled: false
+
+    - Class: moveit_ros_visualization/MotionPlanning
+      Enabled: true
+      Move Group Namespace: ""
+      Name: MotionPlanning
+      Robot Description: robot_description
+      Planning Scene Topic: /monitored_planning_scene
+      Trajectory Topic: /display_planned_path
+      Value: true
+      Planned Path:
+        Color Enabled: false
+        Enabled: true
+        Loop Animation: false
+        Show Robot Visual: true
+        Show Trail: false
+        Trail Step Size: 1
+      Planning Request:
+        Goal Link Alpha: 1
+        Planning Group: arm
+        Show Workspace: false
+      Planning Metrics:
+        Payload: 0
+        Show Joint Torques: false
+        Show Manipulability: false
+        Show Manipulability Region: false
+        Show Cartesian Error: false
+
+  Enabled: true
+  Global Options:
+    Background Color: 48; 48; 48
+    Default Light: true
+    Fixed Frame: base_link
+    Frame Rate: 30
+  Name: root
+  Tools:
+    - Class: rviz_default_plugins/Interact
+      Hide Inactive Objects: true
+    - Class: rviz_default_plugins/MoveCamera
+    - Class: rviz_default_plugins/Select
+  Views:
+    Current:
+      Class: rviz_default_plugins/Orbit
+      Distance: 4.5
+      Focal Point:
+        X: 0.6
+        Y: 0.3
+        Z: 0.5
+      Invert Z Axis: false
+      Name: Current View
+      Near Clip Distance: 0.01
+      Pitch: 0.55
+      Value: Orbit (rviz_default_plugins)
+      Yaw: 5.5
+    Saved: ~

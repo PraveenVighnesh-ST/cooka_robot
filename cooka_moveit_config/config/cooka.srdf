@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot name="cooka">
+
+  <!-- ARM: 6-DOF chain from base to wrist (gantry + SCARA + wrist) -->
+  <group name="arm">
+    <chain base_link="base_link" tip_link="y_rotation_1"/>
+  </group>
+
+  <!-- GRIPPER: single clamping finger (finger_top is a mimic, not commanded) -->
+  <group name="gripper">
+    <joint name="finger_bottom"/>
+  </group>
+
+  <end_effector name="gripper_ee" parent_link="y_rotation_1" group="gripper"/>
+
+  <!-- Named states -->
+  <group_state name="home" group="arm">
+    <joint name="h_slider"  value="0"/>
+    <joint name="v_slider"  value="0"/>
+    <joint name="scara_j1"  value="0"/>
+    <joint name="scara_j2"  value="0"/>
+    <joint name="wrist_z"   value="0"/>
+    <joint name="wrist_y"   value="0"/>
+  </group_state>
+
+  <group_state name="gripper_open" group="gripper">
+    <joint name="finger_bottom" value="0"/>
+  </group_state>
+
+  <group_state name="gripper_closed" group="gripper">
+    <joint name="finger_bottom" value="-0.015"/>
+  </group_state>
+
+  <!--
+    COLLISION RULES
+    ===============
+    Adjacent pairs are always disabled.
+    base_link vs v_slider_1: geometry ensures they never meet.
+
+    CRITICAL: base_link vs ALL scara/wrist/gripper links are LEFT ENABLED.
+    The base_link STL contains closed module-wall faces. The arm must navigate
+    around those walls (entering through the open module fronts).
+    longest_valid_segment_fraction=0.001 in ompl_planning.yaml prevents paths
+    from slipping through thin wall geometry.
+  -->
+
+  <!-- Adjacent pairs -->
+  <disable_collisions link1="base_link"         link2="h_slider_1"       reason="Adjacent"/>
+  <disable_collisions link1="h_slider_1"        link2="v_slider_1"       reason="Adjacent"/>
+  <disable_collisions link1="v_slider_1"        link2="scara_link1_1"    reason="Adjacent"/>
+  <disable_collisions link1="scara_link1_1"     link2="scara_link2_1"    reason="Adjacent"/>
+  <disable_collisions link1="scara_link2_1"     link2="z_rotation_1"     reason="Adjacent"/>
+  <disable_collisions link1="z_rotation_1"      link2="y_rotation_1"     reason="Adjacent"/>
+  <disable_collisions link1="y_rotation_1"      link2="gripper_bottom_1" reason="Adjacent"/>
+  <disable_collisions link1="y_rotation_1"      link2="gripper_top_1"    reason="Adjacent"/>
+
+  <!-- Geometry guarantees -->
+  <disable_collisions link1="base_link"         link2="v_slider_1"       reason="Never"/>
+  <disable_collisions link1="gripper_bottom_1"  link2="gripper_top_1"    reason="Never"/>
+
+</robot>
