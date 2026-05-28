@@ -1,0 +1,45 @@
+# Kitchen module door zone definitions for cooka robot simulation.
+#
+# All values are in METRES (original measurements from CAD are in mm ÷ 1000).
+# Frame: base_link.
+#
+# Each module has exactly ONE collision box per door state:
+#
+#   CLOSED  — box covers the module opening, blocking EE entry.
+#   OPENING — tall box covering the front sweep zone + above during door travel.
+#   OPEN    — box at the top where the door panel rests; front is clear for EE entry.
+#
+# corner: [x, y, z] = bottom-left-front corner of the box in base_link frame.
+#   x = left edge  (along horizontal gantry axis)
+#   y = front edge (smallest Y; modules are accessed from +Y direction)
+#   z = bottom edge (vertical, upward +Z)
+#
+# dims: [width, depth, height] = [X-extent, Y-extent, Z-extent] in metres.
+#
+# The node computes box centre as: corner + dims/2 on each axis.
+#
+# To add more modules later: copy a block, rename, update corner + dims.
+
+modules:
+
+  module1:
+    closed:
+      corner: [0.050, 0.300, 0.425]
+      dims:   [0.550, 0.050, 0.700]
+    opening:
+      corner: [0.050, 0.100, 0.425]
+      dims:   [0.550, 0.050, 1.400]
+    open:
+      corner: [0.050, 0.200, 1.125]
+      dims:   [0.550, 0.050, 0.700]
+
+  module2:
+    closed:
+      corner: [1.300, 0.300, 1.000]
+      dims:   [0.550, 0.050, 0.750]
+    opening:
+      corner: [1.300, 0.100, 1.000]
+      dims:   [0.550, 0.050, 1.500]
+    open:
+      corner: [1.300, 0.200, 1.750]
+      dims:   [0.550, 0.050, 0.750]

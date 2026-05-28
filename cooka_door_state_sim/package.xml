@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>cooka_door_state_sim</name>
+  <version>0.1.0</version>
+  <description>
+    Door-state simulation for the cooka smart kitchen robot.
+    Manages MoveIt2 planning-scene collision zones that represent each
+    module door in OPENING / OPEN / CLOSED states so the trajectory
+    planner avoids the door sweep and resting areas automatically.
+  </description>
+  <maintainer email="milooandmike@gmail.com">Praveen</maintainer>
+  <license>Apache-2.0</license>
+
+  <depend>rclpy</depend>
+  <depend>std_msgs</depend>
+  <depend>geometry_msgs</depend>
+  <depend>shape_msgs</depend>
+  <depend>moveit_msgs</depend>
+  <depend>control_msgs</depend>
+  <depend>sensor_msgs</depend>
+  <depend>trajectory_msgs</depend>
+  <depend>cooka_description</depend>
+  <exec_depend>pnp_operation</exec_depend>
+
+  <test_depend>ament_copyright</test_depend>
+  <test_depend>ament_flake8</test_depend>
+  <test_depend>ament_pep257</test_depend>
+  <test_depend>python3-pytest</test_depend>
+
+  <export>
+    <build_type>ament_python</build_type>
+  </export>
+</package>
